@@ -58,7 +58,6 @@ jobs:
             repo:  ${{ secrets.ECR_REPOSITORY }}
             region: us-west-1
             tags: latest, ${{github.run_number}}
-            auto_tag: true
             daemon_off: false
             dockerfile: ./Dockerfile
             context: ./
