@@ -21,17 +21,20 @@ jobs:
                 java-version: '11'
             - name: Setup SonarQuebe
               uses: warchant/setup-sonar-scanner@v7
+
             - name: SonarQube Scan
-              run: sonar-scanner
-                - Dsonar.host.url=https://sonarcloud.io
-                - Dsonar.login=${{secrets.SONAR_TOKEN}}
-                - Dsonar.organization=${{secrets.SONAR_ORGANIZATION}}
-                - Dsonar.projectKey=${{secrets.SONAR_PROJECT_KEY}}
-                - Dsonar.sources=src/
-                - Dsonar.junit.reporstPath=target/surefire-reports/
-                - Dsonar.jacoco.reportsPath=target/jacoco.exec
-                - Dsonar.java.checkstyle.reportsPaths=target/checkstyle-result.xml
-                - Dsonar.jave.binaries=target/test-classes/com/visualpathit/account 
+              run: |
+               sonar-scanner \
+                 -Dsonar.host.url=https://sonarcloud.io \
+                 -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
+                 -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }} \
+                 -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} \
+                 -Dsonar.sources=src/ \
+                 -Dsonar.junit.reportsPath=target/surefire-reports/ \
+                 -Dsonar.jacoco.reportsPath=target/jacoco.exec \
+                 -Dsonar.java.checkstyle.reportsPaths=target/checkstyle-result.xml \
+                 -Dsonar.java.binaries=target/test-classes/com/visualpathit/account 
+
             - name: SonarQube Quality Gate check
               id: sonarqube-quality-gate-check
               uses: sonarsource/sonarqube-quality-gate-action@master
